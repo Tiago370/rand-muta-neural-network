@@ -4,7 +4,7 @@
  *  Created on: 12 de fev. de 2021
  *      Author:
  */
-
+//v2
 #ifndef NEURON_H_
 #define NEURON_H_
 
@@ -12,7 +12,7 @@
 #include <string>
 #include <stdlib.h>
 
-//v2
+
 using namespace std;
 
 class Neuron{
