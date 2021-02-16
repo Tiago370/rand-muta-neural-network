@@ -12,7 +12,7 @@
 #include <string>
 #include <stdlib.h>
 
-
+//v2
 using namespace std;
 
 class Neuron{
