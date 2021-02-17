@@ -14,6 +14,8 @@
 using namespace std;
 
 string vectorToString(vector<int>* v);
+string doubleVectorToString(vector<double>* v);
+
 void transferList(vector <int>* origem, vector <int>* destino);
 
 #endif /* UTIL_H_ */

@@ -41,7 +41,7 @@ public:
 
 	//activerLayers recebe um vetor de entrada, ativa todas as camadas e
 	//devolve o resultado no vetor poutputs, que deve ser passado previamente alocado
-	void activateLayers(vector<int>* inputs, vector<int>* poutputs);
+	void activateLayers(vector<double>* inputs, vector<double>* poutputs);
 	void copiar_rede(Net * origem);
 	void imprimeRede();
 	void rerandom();

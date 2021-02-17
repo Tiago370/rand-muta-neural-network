@@ -26,23 +26,23 @@ Neuron::Neuron(int nWeights){
 Neuron::~Neuron(){
 }
 
-vector<int>* Neuron::getWeights(){
+vector<double>* Neuron::getWeights(){
 	return &weights;
 }
-int Neuron::getBias(){
+double Neuron::getBias(){
 	return bias;
 }
 
-int Neuron::getOutput(){
+double Neuron::getOutput(){
 	return output;
 }
 
-int Neuron::activation(vector<int>* inputs){
+double Neuron::activation(vector<double>* inputs){
 	if((*inputs).size() != weights.size() || (*inputs).size() == 0){
 		cout << "Erro: input recebido tem " << (*inputs).size() << " elementos, mas deveria ter " << weights.size() << endl;
 		exit(1);
 	}
-	int sum = bias;
+	double sum = bias;
 	for(unsigned int i = 0; i < weights.size();i++){
 		sum += weights[i] * (*inputs)[i];
 	}
@@ -50,7 +50,7 @@ int Neuron::activation(vector<int>* inputs){
 	return output;
 }
 
-int Neuron::ReLU(int x){
+double Neuron::ReLU(double x){
 	if(x > 0) return x;
 	return 0;
 }
@@ -58,7 +58,7 @@ int Neuron::ReLU(int x){
 string Neuron::str(){
 	std::string str_bias = std::to_string(bias);
 	std::string str_output = std::to_string(output);
-	string out ="\n\nBias = "+ str_bias +"\nw = " + vectorToString(&weights) +  "\noutput: " + str_output + "\n";
+	string out ="\n\nBias = "+ str_bias +"\nw = " + doubleVectorToString(&weights) +  "\noutput: " + str_output + "\n";
 	return out;
 }
 
@@ -72,7 +72,7 @@ void Neuron::newWeights(){
 void Neuron::mutation(){
 	bias += -1+rand()%3;//(-1,1)
 	for(unsigned int i = 0; i < weights.size(); i++){
-		int & elemRef = weights.at(i);
+		double & elemRef = weights.at(i);
 		elemRef += (-1+rand()%3);
 	}
 }

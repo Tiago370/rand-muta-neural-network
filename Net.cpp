@@ -9,7 +9,7 @@
 #include <iostream>
 #include <iomanip>
 
-#define DEBUG 0
+#define DEBUG 1
 
 Net::Net(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOutput){
 	this->nInputs = nInputs;
@@ -56,8 +56,8 @@ void Net::rerandom(){
 		}
 }
 
-void Net::activateLayers(vector<int>* inputs, vector<int>* poutputs){
-	vector<vector<int>> layer_in_out(2);
+void Net::activateLayers(vector<double>* inputs, vector<double>* poutputs){
+	vector<vector<double>> layer_in_out(2);
 	layer_in_out[0].resize(nHiddenNeurons);
 	layer_in_out[1].resize(nHiddenNeurons);
 
@@ -65,20 +65,20 @@ void Net::activateLayers(vector<int>* inputs, vector<int>* poutputs){
 	for(int n = 0; n < nHiddenNeurons; n++){
 		layer_in_out[0][n] = layers[0][n].activation(inputs);
 	}
-	if(DEBUG) {for(int n = 0; n < nHiddenNeurons; n++) cout << layer_in_out[0][n] << " "; cout << endl;}
+	//if(DEBUG) {for(int n = 0; n < nHiddenNeurons; n++) cout << layer_in_out[0][n] << " "; cout << endl;}
 
 	//demais camadas
 	for(int l = 1; l < nHiddenLayers; l++){
 		for(int n = 0; n < nHiddenNeurons; n++){
 			layer_in_out[l%2][n] = layers[l][n].activation(&(layer_in_out[(l-1)%2]));
 		}
-		if(DEBUG) {for(int n = 0; n < nHiddenNeurons; n++) cout << layer_in_out[l%2][n] << " "; cout << endl;}
+		//if(DEBUG) {for(int n = 0; n < nHiddenNeurons; n++) cout << layer_in_out[l%2][n] << " "; cout << endl;}
 	}
     //camada de saida
 	for(int n = 0; n < nOutput; n++){
 		(*poutputs)[n] = layers[nHiddenLayers][n].activation(&(layer_in_out[(nHiddenNeurons-1)%2]));
 	}
-	if(DEBUG) {for(int n = 0; n < nOutput; n++) cout << (*poutputs)[n]<< " "; cout << endl;}
+	//if(DEBUG) {for(int n = 0; n < nOutput; n++) cout << (*poutputs)[n]<< " "; cout << endl;}
 }
 
 void Net::setFitness(int pfitness){fitness = pfitness;}
@@ -154,4 +154,3 @@ void Net::imprimeRede(){
         imprimeCamada(i);
     }
 }
-

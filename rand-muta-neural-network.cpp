@@ -23,7 +23,7 @@ bool compareByFitness(Net &a, Net &b){
 
 void random_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOutputs,
 		int nPopulation, int nGenerations,
-		vector<vector<int>> inputs_training, vector<vector<int>> outputs_training){
+		vector<vector<double>> inputs_training, vector<vector<double>> outputs_training){
 
 	Net champion(nInputs, nHiddenLayers, nHiddenNeurons, nOutputs);
 	vector<Net> populacao;
@@ -32,8 +32,8 @@ void random_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOu
 	}
 
 	//estruturas auxiliares
-	vector<int> inputs(nInputs);
-	vector<int> outputs(nOutputs);
+	vector<double> inputs(nInputs);
+	vector<double> outputs(nOutputs);
 
 	int best_fitness = 0;
 	int geneneration_number = 0;
@@ -85,7 +85,7 @@ void random_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOu
 }
 
 int main() {
-	srand(48); //Fixar uma seed para permitir a reprodutibulidade
+	srand(666); //Fixar uma seed para permitir a reprodutibulidade
 
 	int nInputs = 1;
 	int nHiddenLayers = 3;
@@ -99,19 +99,19 @@ int main() {
 	//estruturas auxiliares
 
 
-	//Criando o conjunto de treinamente, vou gerar 500 valores aleatorios
+	//Criando o conjunto de treinamento, vou gerar 500 valores aleatorios
 	int nTrainingSet = 500;
-	vector<vector<int>> inputs_training(nTrainingSet);
-	vector<vector<int>> outputs_training(nTrainingSet);
+	vector<vector<double>> inputs_training(nTrainingSet);
+	vector<vector<double>> outputs_training(nTrainingSet);
 
 
 	for(int i = 0; i < nTrainingSet; i++){
-		int value = rand()%1000;
+		double value = rand()%1000;
 		inputs_training[i].push_back(value);
 		outputs_training[i].push_back((value > 500));
 	}
 
-	if(DEBUG) for(int i = 0; i < nTrainingSet; i++) cout << vectorToString(&(inputs_training[i])) << " out: " << vectorToString(&(outputs_training[i])) << endl;
+	if(DEBUG) for(int i = 0; i < nTrainingSet; i++) cout << doubleVectorToString(&(inputs_training[i])) << " out: " << doubleVectorToString(&(outputs_training[i])) << endl;
 
 
 	random_mutation(nInputs, nHiddenLayers, nHiddenNeurons, nOutputs, nPopulation, nGenerations, inputs_training, outputs_training);
