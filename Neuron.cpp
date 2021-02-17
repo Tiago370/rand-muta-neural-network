@@ -8,6 +8,7 @@
 #include "Neuron.h"
 #include "Util.h"
 #include <iostream>
+#include <random>
 
 #define MIN_BIAS -1000
 #define MAX_BIAS 1000
@@ -63,7 +64,13 @@ string Neuron::str(){
 }
 
 void Neuron::newWeights(){
-	bias = MIN_BIAS + rand() % (MAX_BIAS - MIN_BIAS + 1);
+	constexpr int MIN_BIAS_CONS = MIN_BIAS;
+	constexpr int MAX_BIAS_CONS = MAX_BIAS;
+	std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_real_distribution<double> distr(MIN_BIAS_CONS, MAX_BIAS_CONS);
+	bias = distr(eng);
+	//bias = MIN_BIAS + rand() % (MAX_BIAS - MIN_BIAS + 1);
 	for(unsigned int i = 0; i < weights.size(); i++){
 		weights[i] = MIN_WEIGHT + rand() % (MAX_WEIGHT - MIN_WEIGHT);
 	}
