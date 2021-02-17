@@ -66,21 +66,32 @@ string Neuron::str(){
 void Neuron::newWeights(){
 	constexpr int MIN_BIAS_CONS = MIN_BIAS;
 	constexpr int MAX_BIAS_CONS = MAX_BIAS;
+	constexpr int MIN_WEIGHT_CONS = MIN_WEIGHT;
+	constexpr int MAX_WEIGHT_CONS = MAX_WEIGHT;
+
 	std::random_device rd;
     std::default_random_engine eng(rd());
-    std::uniform_real_distribution<double> distr(MIN_BIAS_CONS, MAX_BIAS_CONS);
-	bias = distr(eng);
+    std::uniform_real_distribution<double> distrBias(MIN_BIAS_CONS, MAX_BIAS_CONS);
+    std::uniform_real_distribution<double> distrWeight(MIN_WEIGHT_CONS, MAX_WEIGHT_CONS);
+	bias =  distrBias(eng);
 	//bias = MIN_BIAS + rand() % (MAX_BIAS - MIN_BIAS + 1);
 	for(unsigned int i = 0; i < weights.size(); i++){
-		weights[i] = MIN_WEIGHT + rand() % (MAX_WEIGHT - MIN_WEIGHT);
+		weights[i] = distrWeight(eng);
+		//weights[i] = MIN_WEIGHT + rand() % (MAX_WEIGHT - MIN_WEIGHT);
 	}
 }
 
 void Neuron::mutation(){
-	bias += -1+rand()%3;//(-1,1)
+	std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_real_distribution<double> distr(-1, 1);
+
+	//bias += -1+rand()%3;//(-1,1)
+	bias += distr(eng);
 	for(unsigned int i = 0; i < weights.size(); i++){
 		double & elemRef = weights.at(i);
-		elemRef += (-1+rand()%3);
+		//elemRef += (-1+rand()%3);
+		elemRef += distr(eng);
 	}
 }
 
