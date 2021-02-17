@@ -4,7 +4,7 @@
  *  Created on: 12 de fev. de 2021
  *      Author:
  */
-//v2
+//v3
 #include "Neuron.h"
 #include "Util.h"
 #include <iostream>
