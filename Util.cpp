@@ -4,10 +4,7 @@
  *  Created on: 12 de fev. de 2021
  *      Author: hokama
  */
-<<<<<<< HEAD
-//main
-=======
-//v3
+
 #include "Util.h"
 
 string vectorToString(vector<int>* v){

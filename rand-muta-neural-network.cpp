@@ -5,11 +5,7 @@
 // Copyright   : 
 // Description : Hello World in C++, Ansi-style
 //============================================================================
-<<<<<<< HEAD
-//main
-=======
-//v3
->>>>>>> v3
+
 #include <iostream>
 #include <stdlib.h>
 #include <algorithm>
@@ -50,7 +46,7 @@ void random_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOu
 			populacao[i].mutation();
 			for(unsigned int in = 0; in < inputs_training.size(); in++){
 				populacao[i].activateLayers(&(inputs_training[in]), &outputs);
-				if((outputs[0] > 500) == outputs_training[in][0]) fitness++;
+				if((outputs[0] > 0) == outputs_training[in][0]) fitness++;
 			}
 			populacao[i].setFitness(fitness);
 			if(fitness > best_fitness) {

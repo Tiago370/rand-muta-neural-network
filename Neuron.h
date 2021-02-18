@@ -12,7 +12,6 @@
 #include <string>
 #include <stdlib.h>
 
-//branch main
 using namespace std;
 
 class Neuron{

@@ -4,11 +4,6 @@
  *  Created on: 12 de fev. de 2021
  *      Author: hokama
  */
-<<<<<<< HEAD
-//main
-=======
-//v3
->>>>>>> v3
 #include "Net.h"
 #include <iostream>
 #include <iomanip>
@@ -60,13 +55,8 @@ void Net::rerandom(){
 		}
 }
 
-<<<<<<< HEAD
-void Net::activateLayers(vector <int>* inputs, vector<int>* poutputs){
-	vector<vector<int>> layer_in_out(2);
-=======
 void Net::activateLayers(vector<double>* inputs, vector<double>* poutputs){
 	vector<vector<double>> layer_in_out(2);
->>>>>>> v3
 	layer_in_out[0].resize(nHiddenNeurons);
 	layer_in_out[1].resize(nHiddenNeurons);
 
