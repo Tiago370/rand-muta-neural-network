@@ -56,7 +56,7 @@ void Net::rerandom(){
 		}
 }
 
-void Net::activateLayers(vector<int>* inputs, vector<int>* poutputs){
+void Net::activateLayers(vector <int>* inputs, vector<int>* poutputs){
 	vector<vector<int>> layer_in_out(2);
 	layer_in_out[0].resize(nHiddenNeurons);
 	layer_in_out[1].resize(nHiddenNeurons);
