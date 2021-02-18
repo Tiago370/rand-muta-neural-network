@@ -8,7 +8,6 @@
 //main
 =======
 //v3
->>>>>>> v3
 #include "Util.h"
 
 string vectorToString(vector<int>* v){

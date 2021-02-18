@@ -4,11 +4,7 @@
  *  Created on: 12 de fev. de 2021
  *      Author:
  */
-<<<<<<< HEAD
-//main
-=======
-//v3
->>>>>>> v3
+
 #ifndef NEURON_H_
 #define NEURON_H_
 
