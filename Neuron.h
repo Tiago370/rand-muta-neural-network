@@ -4,7 +4,11 @@
  *  Created on: 12 de fev. de 2021
  *      Author:
  */
+<<<<<<< HEAD
 //main
+=======
+//v3
+>>>>>>> v3
 #ifndef NEURON_H_
 #define NEURON_H_
 
@@ -17,14 +21,14 @@ using namespace std;
 
 class Neuron{
 public:
-	vector<int> weights;
-	int bias;
-	int output;
+	vector<double> weights;
+	double bias;
+	double output;
 
-	vector<int>* getWeights();
-	int getBias();
-	int getOutput();
-	int activation(vector<int>* inputs);
+	vector<double>* getWeights();
+	double getBias();
+	double getOutput();
+	double activation(vector<double>* inputs);
 
 
 	string str();
@@ -36,8 +40,8 @@ public:
 	~Neuron();
 
 private:
-	int ReLU(int x);
-	void summingJunction(vector<int>* inputs);
+	double ReLU(double x);
+	void summingJunction(vector<double>* inputs);
 };
 
 #endif /* NEURON_H_ */

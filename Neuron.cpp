@@ -4,10 +4,15 @@
  *  Created on: 12 de fev. de 2021
  *      Author:
  */
+<<<<<<< HEAD
 //main
+=======
+//v3
+>>>>>>> v3
 #include "Neuron.h"
 #include "Util.h"
 #include <iostream>
+#include <random>
 
 #define MIN_BIAS -1000
 #define MAX_BIAS 1000
@@ -26,23 +31,23 @@ Neuron::Neuron(int nWeights){
 Neuron::~Neuron(){
 }
 
-vector<int>* Neuron::getWeights(){
+vector<double>* Neuron::getWeights(){
 	return &weights;
 }
-int Neuron::getBias(){
+double Neuron::getBias(){
 	return bias;
 }
 
-int Neuron::getOutput(){
+double Neuron::getOutput(){
 	return output;
 }
 
-int Neuron::activation(vector<int>* inputs){
+double Neuron::activation(vector<double>* inputs){
 	if((*inputs).size() != weights.size() || (*inputs).size() == 0){
 		cout << "Erro: input recebido tem " << (*inputs).size() << " elementos, mas deveria ter " << weights.size() << endl;
 		exit(1);
 	}
-	int sum = bias;
+	double sum = bias;
 	for(unsigned int i = 0; i < weights.size();i++){
 		sum += weights[i] * (*inputs)[i];
 	}
@@ -50,7 +55,7 @@ int Neuron::activation(vector<int>* inputs){
 	return output;
 }
 
-int Neuron::ReLU(int x){
+double Neuron::ReLU(double x){
 	if(x > 0) return x;
 	return 0;
 }
@@ -58,22 +63,39 @@ int Neuron::ReLU(int x){
 string Neuron::str(){
 	std::string str_bias = std::to_string(bias);
 	std::string str_output = std::to_string(output);
-	string out ="\n\nBias = "+ str_bias +"\nw = " + vectorToString(&weights) +  "\noutput: " + str_output + "\n";
+	string out ="\n\nBias = "+ str_bias +"\nw = " + doubleVectorToString(&weights) +  "\noutput: " + str_output + "\n";
 	return out;
 }
 
 void Neuron::newWeights(){
-	bias = MIN_BIAS + rand() % (MAX_BIAS - MIN_BIAS + 1);
+	constexpr int MIN_BIAS_CONS = MIN_BIAS;
+	constexpr int MAX_BIAS_CONS = MAX_BIAS;
+	constexpr int MIN_WEIGHT_CONS = MIN_WEIGHT;
+	constexpr int MAX_WEIGHT_CONS = MAX_WEIGHT;
+
+	std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_real_distribution<double> distrBias(MIN_BIAS_CONS, MAX_BIAS_CONS);
+    std::uniform_real_distribution<double> distrWeight(MIN_WEIGHT_CONS, MAX_WEIGHT_CONS);
+	bias =  distrBias(eng);
+	//bias = MIN_BIAS + rand() % (MAX_BIAS - MIN_BIAS + 1);
 	for(unsigned int i = 0; i < weights.size(); i++){
-		weights[i] = MIN_WEIGHT + rand() % (MAX_WEIGHT - MIN_WEIGHT);
+		weights[i] = distrWeight(eng);
+		//weights[i] = MIN_WEIGHT + rand() % (MAX_WEIGHT - MIN_WEIGHT);
 	}
 }
 
 void Neuron::mutation(){
-	bias += -1+rand()%3;//(-1,1)
+	std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_real_distribution<double> distr(-1, 1);
+
+	//bias += -1+rand()%3;//(-1,1)
+	bias += distr(eng);
 	for(unsigned int i = 0; i < weights.size(); i++){
-		int & elemRef = weights.at(i);
-		elemRef += (-1+rand()%3);
+		double & elemRef = weights.at(i);
+		//elemRef += (-1+rand()%3);
+		elemRef += distr(eng);
 	}
 }
 
