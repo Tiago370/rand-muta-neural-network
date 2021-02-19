@@ -4,12 +4,13 @@
 #include "Net.h"
 #include "Neuron.h"
 #include "Util.h"
-#include "maior500.h"
+#include "compNumber.h"
 
-void maior500(){
+void compNumber(){
+
 	srand(666); //Fixar uma seed para permitir a reprodutibulidade
 
-	int nInputs = 1;
+	int nInputs = 2;
 	int nHiddenLayers = 3;
 	int nHiddenNeurons = 3;
 	int nOutputs = 1;
@@ -22,27 +23,28 @@ void maior500(){
 
 
 	//Criando o conjunto de treinamento, vou gerar 500 valores aleatorios
-	int nTrainingSet = 500;
+	int nTrainingSet = 100;
 	vector<vector<double>> inputs_training(nTrainingSet);
 	vector<vector<double>> outputs_training(nTrainingSet);
 
 
 	for(int i = 0; i < nTrainingSet; i++){
-		double value = rand()%1000;
-		inputs_training[i].push_back(value);
-		outputs_training[i].push_back((value > 500));
+		double value1 = rand()%1000;
+		double value2 = rand()%1000;
+
+		inputs_training[i].push_back(value1);
+        inputs_training[i].push_back(value2);
+		outputs_training[i].push_back((value1 > value2));
 	}
 
 	//if(DEBUG) for(int i = 0; i < nTrainingSet; i++) cout << doubleVectorToString(&(inputs_training[i])) << " out: " << doubleVectorToString(&(outputs_training[i])) << endl;
 
 
-	random_mutation(nInputs, nHiddenLayers, nHiddenNeurons, nOutputs, nPopulation, nGenerations, inputs_training, outputs_training);
+	compNumberrandom_mutation(nInputs, nHiddenLayers, nHiddenNeurons, nOutputs, nPopulation, nGenerations, inputs_training, outputs_training);
 
 }
-bool compareByFitness(Net &a, Net &b){
-	return a.getFitness() > b.getFitness();
-}
-void random_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOutputs,
+
+void compNumberrandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOutputs,
 		int nPopulation, int nGenerations,
 		vector<vector<double>> inputs_training, vector<vector<double>> outputs_training){
 
@@ -78,7 +80,7 @@ void random_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOu
 		}
 
 		//Tentativa 1: os piores individuos serao refeitos, isso introduz aleatoriedade
-		sort(populacao.begin(), populacao.end(), compareByFitness);
+		sort(populacao.begin(), populacao.end(), compNumbercompareByFitness);
 		for(int i = nPopulation*0.9; i < nPopulation; i++){
 			populacao[i].rerandom();
 		}
@@ -96,11 +98,18 @@ void random_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOu
 	cout<< "Rede Vencedora" << endl;
 	champion.imprimeRede();
 
-	for(int i = 490; i < 510; i++){
-		cout << "Entrada: " << i << " Saida: ";
-		inputs[0] = i;
-		champion.activateLayers(&inputs, &outputs);
-		if(outputs[0]==0) cout << "False" << endl;
+	for(int i = 0; i < 1000; i++){
+    	inputs[0] = rand()%1000;
+        inputs[1] = rand()%1000;
+        cout << "Entradas: " << inputs[0] << ", " << inputs[1] << " Saida: ";
+    	champion.activateLayers(&inputs, &outputs);
+	    if(outputs[0]==0) cout << "False" << endl;
 		if(outputs[0]>0) cout << "True" << endl;
 	}
+
+}
+bool compNumbercompareByFitness(Net &a, Net &b){
+
+	return a.getFitness() > b.getFitness();
+
 }

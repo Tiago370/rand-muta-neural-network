@@ -13,14 +13,15 @@
 #include "Neuron.h"
 #include "Util.h"
 #include "maior500.h"
-
+#include "compNumber.h"
 #define DEBUG 1
 
 using namespace std;
 
 
 int main() {
-	maior500();
+	//maior500();
+	compNumber();
 	return 0;
 }
 

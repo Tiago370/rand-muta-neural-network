@@ -2,7 +2,7 @@ CXXFLAGS += -O3 -std=c++11 -Wall -Wextra -pedantic-errors
 
 all: build/rand-muta-neural-network
 
-build/rand-muta-neural-network: build/Neuron.o build/Net.o build/rand-muta-neural-network.o build/Util.o build/maior500.o
+build/rand-muta-neural-network: build/Neuron.o build/Net.o build/rand-muta-neural-network.o build/Util.o build/maior500.o build/compNumber.o
 	$(CXX) $(CXXFLAGS) -o build/rand-muta-neural-network build/*.o
 
 build/Neuron.o: Neuron.cpp Neuron.h
@@ -19,6 +19,9 @@ build/rand-muta-neural-network.o: rand-muta-neural-network.cpp
 
 build/maior500.o: maior500.cpp maior500.h
 	$(CXX) $(CXXFLAGS) -c maior500.cpp -o build/maior500.o
+
+build/compNumber.o: compNumber.cpp compNumber.h
+	$(CXX) $(CXXFLAGS) -c compNumber.cpp -o build/compNumber.o
 
 clean:
 	$(RM) build/*.o build/rand-muta-neural-network
