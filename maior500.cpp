@@ -10,8 +10,8 @@ void maior500(){
 	srand(666); //Fixar uma seed para permitir a reprodutibulidade
 
 	int nInputs = 1;
-	int nHiddenLayers = 3;
-	int nHiddenNeurons = 3;
+	int nHiddenLayers = 4;
+	int nHiddenNeurons = 1;
 	int nOutputs = 1;
 
 	int nGenerations = 3000;
@@ -95,12 +95,15 @@ void random_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOu
 	cout << "Numero de geracoes: " << geneneration_number << endl;
 	cout<< "Rede Vencedora" << endl;
 	champion.imprimeRede();
-
-	for(int i = 490; i < 510; i++){
-		cout << "Entrada: " << i << " Saida: ";
+	int acertos = 0;
+	for(int i = 0; i < 1001; i++){
+		//cout << "Entrada: " << i << " Saida: ";
 		inputs[0] = i;
 		champion.activateLayers(&inputs, &outputs);
-		if(outputs[0]==0) cout << "False" << endl;
-		if(outputs[0]>0) cout << "True" << endl;
+		if((outputs[0]>0 && i > 500) || (outputs[0]==0 && i <= 500)){
+			acertos++;
+		}
 	}
+	double assertividade = (double)(acertos/10);//(acertos/1000)*100;
+	cout << "Assertividade: " << assertividade << "%" << endl;
 }

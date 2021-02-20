@@ -4,73 +4,42 @@
 #include "Net.h"
 #include "Neuron.h"
 #include "Util.h"
-#include "compNumber.h"
+#include "triangulo.h"
 
-void compNumber(){
+void triangulo(){
 
 	srand(666); //Fixar uma seed para permitir a reprodutibulidade
 
-	int nInputs = 2;
-	int nHiddenLayers = 4;
+	int nInputs = 3;
+	int nHiddenLayers = 1;
 	int nHiddenNeurons = 1;
 	int nOutputs = 1;
 
 	int nGenerations = 3000;
-	int nPopulation = 50;
+	int nPopulation = 500;
 
 
 	//estruturas auxiliares
-
-
 	//Criando o conjunto de treinamento, vou gerar 500 valores aleatorios
-	int nTrainingSet = 500; // obrigatoriamente um número divisível por 4
+	int nTrainingSet = 500;
 	vector<vector<double>> inputs_training(nTrainingSet);
 	vector<vector<double>> outputs_training(nTrainingSet);
 
-	// escolher pares em que: value1 > value2
-	for(int i = 0; i < nTrainingSet/2; i++){
-		double value1 = rand()%1000;
-		double value2 = rand()%1000;
+	for(int i = 0; i < nTrainingSet; i++){
+		double value1 = rand()%1001;
+		double value2 = rand()%1001;
+        double value3 = rand()%1001;
 
-		while(value1 <= value2){
-			value1 = rand()%1000;
-			value2 = rand()%1000;
-		}
-
-		inputs_training[i].push_back(value1);
-        inputs_training[i].push_back(value2);
 		outputs_training[i].push_back(1);
-	}
-	// escolher pares em que: value1 < value2
-	for(int i = nTrainingSet/2; i < (nTrainingSet/2)+(nTrainingSet/4); i++){
-		double value1 = rand()%1000;
-		double value2 = rand()%1000;
-
-		while(value1 >= value2){
-			value1 = rand()%1000;
-			value2 = rand()%1000;
-		}
-
-		inputs_training[i].push_back(value1);
-        inputs_training[i].push_back(value2);
-		outputs_training[i].push_back(0);
-	}
-	// escolher pares em que: value1 == value2
-	for(int i = (nTrainingSet/2)+(nTrainingSet/4); i < nTrainingSet; i++){
-		double value1 = rand()%1000;
-
-		inputs_training[i].push_back(value1);
-        inputs_training[i].push_back(value1);
-		outputs_training[i].push_back(0);
 	}
 	//if(DEBUG) for(int i = 0; i < nTrainingSet; i++) cout << doubleVectorToString(&(inputs_training[i])) << " out: " << doubleVectorToString(&(outputs_training[i])) << endl;
 
 
-	compNumberrandom_mutation(nInputs, nHiddenLayers, nHiddenNeurons, nOutputs, nPopulation, nGenerations, inputs_training, outputs_training);
+	trianguloRandom_mutation(nInputs, nHiddenLayers, nHiddenNeurons, nOutputs, nPopulation, nGenerations, inputs_training, outputs_training);
 
 }
 
-void compNumberrandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOutputs,
+void trianguloRandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOutputs,
 		int nPopulation, int nGenerations,
 		vector<vector<double>> inputs_training, vector<vector<double>> outputs_training){
 
@@ -106,7 +75,7 @@ void compNumberrandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeuron
 		}
 
 		//Tentativa 1: os piores individuos serao refeitos, isso introduz aleatoriedade
-		sort(populacao.begin(), populacao.end(), compNumbercompareByFitness);
+		sort(populacao.begin(), populacao.end(), trianguloCompareByFitness);
 		for(int i = nPopulation*0.9; i < nPopulation; i++){
 			populacao[i].rerandom();
 		}
@@ -125,11 +94,11 @@ void compNumberrandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeuron
 	champion.imprimeRede();
 	int acertos = 0;
 	for(int i = 0; i < 1000; i++){
-    	inputs[0] = rand()%1000;
-        inputs[1] = rand()%1000;
+    	inputs[0] = rand()%5;
+        inputs[1] = rand()%5;
         //cout << "Entradas: " << inputs[0] << ", " << inputs[1] << " Saida: ";
     	champion.activateLayers(&inputs, &outputs);
-	    if((outputs[0]>0) == (inputs[0] > inputs[1])){
+	    if(outputs[0]>0){
 			acertos++;
 		}
 	}
@@ -137,7 +106,7 @@ void compNumberrandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeuron
 	cout << "acertos: " << acertos << endl;
 	cout << "Assertividade: " << assertividade << "%" << endl;
 }
-bool compNumbercompareByFitness(Net &a, Net &b){
+bool trianguloCompareByFitness(Net &a, Net &b){
 
 	return a.getFitness() > b.getFitness();
 

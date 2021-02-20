@@ -14,7 +14,8 @@
 #include "Util.h"
 #include "maior500.h"
 #include "compNumber.h"
-#define DEBUG 1
+#include "triangulo.h"
+#define DEBUG 0
 
 using namespace std;
 
@@ -22,6 +23,7 @@ using namespace std;
 int main() {
 	//maior500();
 	compNumber();
+	//triangulo();
 	return 0;
 }
 
