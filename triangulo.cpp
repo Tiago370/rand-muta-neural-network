@@ -11,8 +11,8 @@ void triangulo(){
 	srand(666); //Fixar uma seed para permitir a reprodutibulidade
 
 	int nInputs = 3;
-	int nHiddenLayers = 1;
-	int nHiddenNeurons = 1;
+	int nHiddenLayers = 2;
+	int nHiddenNeurons = 2;
 	int nOutputs = 1;
 
 	int nGenerations = 3000;
@@ -26,11 +26,20 @@ void triangulo(){
 	vector<vector<double>> outputs_training(nTrainingSet);
 
 	for(int i = 0; i < nTrainingSet; i++){
-		double value1 = rand()%1001;
-		double value2 = rand()%1001;
-        double value3 = rand()%1001;
+		double a = 0;
+		double b = 0;
+        double c = 0;
+		while (a+b<=c){
+			a = rand()%1001;
+			b = rand()%1001;
+        	c = rand()%1001;
+		}
+		
 
-		outputs_training[i].push_back(1);
+		inputs_training[i].push_back(a);
+		inputs_training[i].push_back(b);
+		inputs_training[i].push_back(c);
+		outputs_training[i].push_back((a+b>c)&&(b+c>a)&&(c+a>b));
 	}
 	//if(DEBUG) for(int i = 0; i < nTrainingSet; i++) cout << doubleVectorToString(&(inputs_training[i])) << " out: " << doubleVectorToString(&(outputs_training[i])) << endl;
 
@@ -77,11 +86,12 @@ void trianguloRandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons
 		//Tentativa 1: os piores individuos serao refeitos, isso introduz aleatoriedade
 		sort(populacao.begin(), populacao.end(), trianguloCompareByFitness);
 		for(int i = nPopulation*0.9; i < nPopulation; i++){
-			populacao[i].rerandom();
+			//populacao[i].rerandom()
+			populacao[i].copiar_rede(&champion);
 		}
 
 		//Tentativa 2: a cada 100 geracoes eu coloco o campeao de volta na populacao
-		if(geneneration_number%100 == 0){
+		if(geneneration_number%1 == 0){
 			//campeao se reproduz
 			populacao[nPopulation-1].copiar_rede(&champion);
 		}
@@ -94,11 +104,13 @@ void trianguloRandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons
 	champion.imprimeRede();
 	int acertos = 0;
 	for(int i = 0; i < 1000; i++){
-    	inputs[0] = rand()%5;
-        inputs[1] = rand()%5;
+    	inputs[0] = rand()%1001;//a
+        inputs[1] = rand()%1001;//b
+    	inputs[2] = rand()%1001;//c
+
         //cout << "Entradas: " << inputs[0] << ", " << inputs[1] << " Saida: ";
     	champion.activateLayers(&inputs, &outputs);
-	    if(outputs[0]>0){
+	    if((outputs[0]>0) == ((inputs[0]+inputs[1]>inputs[2])&&(inputs[1]+inputs[2]>inputs[0])&&(inputs[2]+inputs[0]>inputs[1]))){
 			acertos++;
 		}
 	}

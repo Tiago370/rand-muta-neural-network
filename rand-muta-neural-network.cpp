@@ -22,8 +22,8 @@ using namespace std;
 
 int main() {
 	//maior500();
-	compNumber();
-	//triangulo();
+	//compNumber();
+	triangulo();
 	return 0;
 }
 
