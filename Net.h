@@ -13,7 +13,6 @@
 #include <string>
 #include <stdlib.h>
 
-
 using namespace std;
 
 class Net{
@@ -22,7 +21,7 @@ public:
 	int nHiddenLayers;
 	int nHiddenNeurons;
 	int nOutput;
-	int fitness;
+	double fitness;
 
 	vector<vector<Neuron>> layers;
 
@@ -30,8 +29,8 @@ public:
 
 	~Net();
 
-	void setFitness(int pfitness);
-	int getFitness();
+	void setFitness(double pfitness);
+	double getFitness();
 	int getNInputs();
 	int getNHiddenLayers();
 	int getNHiddenNeurons();
@@ -45,6 +44,9 @@ public:
 	void copiar_rede(Net * origem);
 	void imprimeRede();
 	void rerandom();
+	void openNet(string arquivo);
+	void saveNet(string arquivo);
+
 private:
 	vector<vector<Neuron>>* getLayers();
 	void imprimeCamada(unsigned int i);

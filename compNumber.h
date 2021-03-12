@@ -1,5 +1,5 @@
 #include "Net.h"
-#include "Neuron.h"
+//#include "Neuron.h"
 #include "Util.h"
 void compNumber();
 bool compNumbercompareByFitness(Net &a, Net &b);

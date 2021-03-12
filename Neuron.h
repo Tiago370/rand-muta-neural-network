@@ -1,13 +1,3 @@
-/*
- * Neuron.h
- *
- *  Created on: 12 de fev. de 2021
- *      Author:
- */
-
-#ifndef NEURON_H_
-#define NEURON_H_
-
 #include <vector>
 #include <string>
 #include <stdlib.h>
@@ -22,6 +12,7 @@ public:
 
 	vector<double>* getWeights();
 	double getBias();
+	void setBias(double pbias);
 	double getOutput();
 	double activation(vector<double>* inputs);
 
@@ -38,5 +29,3 @@ private:
 	double ReLU(double x);
 	void summingJunction(vector<double>* inputs);
 };
-
-#endif /* NEURON_H_ */

@@ -9,21 +9,21 @@
 #include <iostream>
 #include <stdlib.h>
 #include <algorithm>
-#include "Net.h"
-#include "Neuron.h"
+#include <string>
+//#include "Net.h"
+//#include "Neuron.h"
+//#include "square.h"
+#include "square_training.h"
 #include "Util.h"
-#include "maior500.h"
-#include "compNumber.h"
-#include "triangulo.h"
+//#include "compNumber.h"
+
 #define DEBUG 0
 
 using namespace std;
 
-
 int main() {
-	//maior500();
+	square_training();
+	
 	//compNumber();
-	triangulo();
 	return 0;
 }
-

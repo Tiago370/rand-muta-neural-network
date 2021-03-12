@@ -33,7 +33,9 @@ vector<double>* Neuron::getWeights(){
 double Neuron::getBias(){
 	return bias;
 }
-
+void Neuron::setBias(double pbias){
+	bias = pbias;
+}
 double Neuron::getOutput(){
 	return output;
 }

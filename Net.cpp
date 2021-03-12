@@ -4,18 +4,23 @@
  *  Created on: 12 de fev. de 2021
  *      Author: hokama
  */
+#include <stdio.h>
+#include <stdlib.h>
 #include "Net.h"
+//#include "Neuron.h"
+#include <vector>
 #include <iostream>
 #include <iomanip>
+#include <string>
 
-#define DEBUG 1
+#define DEBUG 0
 
 Net::Net(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOutput){
 	this->nInputs = nInputs;
 	this->nHiddenLayers = nHiddenLayers;
 	this->nHiddenNeurons = nHiddenNeurons;
 	this->nOutput = nOutput;
-	fitness = 0;
+	this->fitness = 0;
 
 	layers.resize(nHiddenLayers + 1);
 
@@ -38,9 +43,158 @@ Net::Net(int nInputs, int nHiddenLayers, int nHiddenNeurons, int nOutput){
 	}
 }
 
-Net::~Net(){
-}
+Net::~Net(){}
+void Net::openNet(string arquivo){
+	int nInputs;
+	int nHiddenLayers;
+	int nHiddenNeurons;
+	int nOutputs;
 
+	FILE *arq;
+	char Linha[100];
+	int i;
+    char *arqui = (char*) malloc((arquivo.size() + 1)*sizeof(char));
+    arquivo.copy(arqui, arquivo.size() + 1);
+    arqui[arquivo.size()] = '\0';
+	// Abre um arquivo TEXTO para LEITURA
+	arq = fopen(arqui, "rt");
+	if (arq == NULL){  // Se houve erro na abertura
+		printf("Problemas na abertura do arquivo\n");
+    	return;
+  	}
+  	//ler dimensões da rede
+	fscanf(arq, "%d %d %d %d", &nInputs, &nHiddenLayers, &nHiddenNeurons, &nOutputs); 
+
+	this->nInputs = nInputs;
+	this->nHiddenLayers = nHiddenLayers;
+	this->nHiddenNeurons = nHiddenNeurons;
+	this->nOutput = nOutputs;
+	//layers.clear();
+	layers.resize(nHiddenLayers + 1);
+
+	vector<double>* aux;
+	//Ler a primeira camada
+	layers[0].clear();
+	for(int i = 0; i < nHiddenNeurons; i++){
+		layers[0].push_back(nInputs);
+		//ler o bias do neurônio
+		double bias;
+		fscanf(arq, "%lf", &bias);
+		//atualizar o bias no neurônio
+		layers[0][i].setBias(bias);
+		//obter o apontador para os pesos
+		aux = layers[0][i].getWeights();
+		//esvaziar o vector de pesos
+		aux->clear();
+		//ler os pesos
+		for(int j = 0; j < this->nInputs; j++){
+			double peso;
+			fscanf(arq, "%lf", &peso);
+			aux->push_back(peso);
+		}
+	}
+	//Ler as demais camadas
+	for(int l = 1; l < nHiddenLayers; l++){
+		layers[l].clear();
+		for(int i = 0; i < nHiddenNeurons; i++){
+			layers[l].push_back(nHiddenNeurons);
+			//ler o bias do neurônio
+			double bias;
+			fscanf(arq, "%lf", &bias);
+			//atualizar o bias no neurônio
+			layers[l][i].setBias(bias);
+			//obter o apontador para os pesos
+			aux = layers[l][i].getWeights();
+			//esvaziar o vector de pesos
+			aux->clear();
+			//ler os pesos
+			for(int j = 0; j < nHiddenNeurons; j++){
+				double peso;
+				fscanf(arq, "%lf", &peso);
+				aux->push_back(peso);
+			}
+
+		}
+	}
+	//Ler a camada de saida
+	layers[nHiddenLayers].clear();
+	for(int i = 0; i < nOutput; i++){
+		layers[nHiddenLayers].push_back(nHiddenNeurons);
+		//ler o bias do neurônio
+		double bias;
+		fscanf(arq, "%lf", &bias);
+		//atualizar o bias no neurônio
+		layers[nHiddenLayers][i].setBias(bias);
+		//obter o apontador para os pesos
+		aux = layers[nHiddenLayers][i].getWeights();
+		//esvaziar o vector de pesos
+		aux->clear();
+		//ler os pesos
+		for(int j = 0; j < nHiddenNeurons; j++){
+			double peso;
+			fscanf(arq, "%lf", &peso);
+			aux->push_back(peso);
+		}
+	}
+  	fclose(arq);
+}
+void Net::saveNet(string arquivo){
+	FILE *arq;
+    char *arqui = (char*) malloc((arquivo.size() + 1)*sizeof(char));
+    arquivo.copy(arqui, arquivo.size() + 1);
+    arqui[arquivo.size()] = '\0';
+	// Abre um arquivo TEXTO para ESCRITA
+	arq = fopen(arqui, "w");
+	if (arq == NULL){  // Se houve erro na abertura
+		printf("Problemas na abertura do arquivo\n");
+    	return;
+  	}
+  	//Imprimir as dimensões da rede
+	fprintf(arq, "%d %d %d %d\n", nInputs, nHiddenLayers, nHiddenNeurons, nOutput); 
+	vector<double>* aux;
+	//Imprimir a primeira camada
+	for(int i = 0; i < nHiddenNeurons; i++){
+		//Escrever o bias do neurônio
+		double bias = layers[0][i].getBias();
+		fprintf(arq, "%lf\n", bias);
+		//obter o apontador para os pesos
+		aux = layers[0][i].getWeights();
+		//Escrever os pesos
+		for(int j = 0; j < this->nInputs; j++){
+			double peso = aux->at(j);
+			fprintf(arq, "%lf\n", peso);
+		}
+	}
+	//Ler as demais camadas
+	for(int l = 1; l < nHiddenLayers; l++){
+		for(int i = 0; i < nHiddenNeurons; i++){
+			//Escrever o bias do neurônio
+			double bias = layers[l][i].getBias();
+			fprintf(arq, "%lf\n", bias);
+			//obter o apontador para os pesos
+			aux = layers[l][i].getWeights();
+			//Escrever os pesos
+			for(int j = 0; j < nHiddenNeurons; j++){
+				double peso = aux->at(j);
+				fprintf(arq, "%lf\n", peso);
+			}
+
+		}
+	}
+	for(int i = 0; i < nOutput; i++){
+		//Escrever o bias do neurônio
+		double bias = layers[nHiddenLayers][i].getBias();
+		fprintf(arq, "%lf\n", bias);
+		//obter o apontador para os pesos
+		aux = layers[nHiddenLayers][i].getWeights();
+		//Escrever os pesos
+		for(int j = 0; j < nHiddenNeurons; j++){
+			double peso = aux->at(j);
+			fprintf(arq, "%lf\n", peso);
+		}
+	}
+  	fclose(arq);
+}
 void Net::rerandom(){
 		//Aleatorizar as hidden layers
 		for(int l = 0; l < nHiddenLayers; l++){
@@ -80,8 +234,12 @@ void Net::activateLayers(vector<double>* inputs, vector<double>* poutputs){
 	//if(DEBUG) {for(int n = 0; n < nOutput; n++) cout << (*poutputs)[n]<< " "; cout << endl;}
 }
 
-void Net::setFitness(int pfitness){fitness = pfitness;}
-int Net::getFitness(){return fitness;}
+void Net::setFitness(double pfitness){
+	this->fitness = pfitness;
+}
+double Net::getFitness(){
+	return fitness;
+}
 
 vector<vector<Neuron>>* Net::getLayers(){
     return &layers;

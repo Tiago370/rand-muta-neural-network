@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include "Net.h"
-#include "Neuron.h"
+//#include "Neuron.h"
 #include "Util.h"
 #include "compNumber.h"
 
@@ -11,7 +11,7 @@ void compNumber(){
 	srand(666); //Fixar uma seed para permitir a reprodutibulidade
 
 	int nInputs = 2;
-	int nHiddenLayers = 4;
+	int nHiddenLayers = 1;
 	int nHiddenNeurons = 1;
 	int nOutputs = 1;
 
@@ -123,6 +123,7 @@ void compNumberrandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeuron
 	cout << "Numero de geracoes: " << geneneration_number << endl;
 	cout<< "Rede Vencedora" << endl;
 	champion.imprimeRede();
+	//champion.saveNet("compNumberNet.txt");
 	int acertos = 0;
 	for(int i = 0; i < 1000; i++){
     	inputs[0] = rand()%1000;

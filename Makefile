@@ -2,7 +2,7 @@ CXXFLAGS += -O3 -std=c++11 -Wall -Wextra -pedantic-errors
 
 all: build/rand-muta-neural-network
 
-build/rand-muta-neural-network: build/Neuron.o build/Net.o build/rand-muta-neural-network.o build/Util.o build/maior500.o build/compNumber.o build/triangulo.o
+build/rand-muta-neural-network: build/Neuron.o build/Net.o build/rand-muta-neural-network.o build/Util.o build/compNumber.o build/square.o build/square_training.o
 	$(CXX) $(CXXFLAGS) -o build/rand-muta-neural-network build/*.o
 
 build/Neuron.o: Neuron.cpp Neuron.h
@@ -17,14 +17,17 @@ build/Util.o: Util.cpp Util.h
 build/rand-muta-neural-network.o: rand-muta-neural-network.cpp 
 	$(CXX) $(CXXFLAGS) -c rand-muta-neural-network.cpp -o build/rand-muta-neural-network.o
 
-build/maior500.o: maior500.cpp maior500.h
-	$(CXX) $(CXXFLAGS) -c maior500.cpp -o build/maior500.o
-
 build/compNumber.o: compNumber.cpp compNumber.h
 	$(CXX) $(CXXFLAGS) -c compNumber.cpp -o build/compNumber.o
 
 build/triangulo.o: triangulo.cpp triangulo.h
 	$(CXX) $(CXXFLAGS) -c triangulo.cpp -o build/triangulo.o
+
+build/square.o: square.cpp square.h
+	$(CXX) $(CXXFLAGS) -c square.cpp -o build/square.o
+
+build/square_training.o: square_training.cpp square_training.h
+	$(CXX) $(CXXFLAGS) -c square_training.cpp -o build/square_training.o
 
 
 clean:
