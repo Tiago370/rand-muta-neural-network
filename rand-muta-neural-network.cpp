@@ -5,7 +5,7 @@
 // Copyright   : 
 // Description : Hello World in C++, Ansi-style
 //============================================================================
-
+//teste cygwin
 #include <iostream>
 #include <stdlib.h>
 #include <algorithm>
