@@ -27,7 +27,8 @@ void play(Net *net, Square *square, int nInputs, int nOutputs, int nSteps){
     }
 //    cout << "fitness net: " << net->getFitness() << endl;
 //    cout << "fitness square: " << square->fitness() << endl;
-    double fitness = (double)net->getFitness() + (double)(square->fitness()/square->getSize());
+    //double fitness = (double)net->getFitness() + (double)(square->fitness()/square->getSize());
+    double fitness = (double)net->getFitness() + (double)square->fitness();
 //    cout << fitness << endl; 
     net->setFitness(fitness);
 //    cout << "fitness net: " << (double)net->getFitness() << endl;
@@ -110,6 +111,7 @@ void squareRandom_mutation(int nInputs, int nHiddenLayers, int nHiddenNeurons, i
         //cerr << "aqui fim" << endl;
 	}
     cout << "Fitness do campeão " << champion.getFitness() << endl;
+    champion.saveNet("champion.txt");
 }
 
 bool squareCompareByFitness(Net &a, Net &b){

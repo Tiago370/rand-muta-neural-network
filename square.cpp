@@ -108,14 +108,16 @@ double Square::fitness(){
     int posX = positions[last][0];
     int posY = positions[last][1];
     
-    int objX = floor(biggerSide/2) - floor(smallerSide/2);
-    int objY = floor(biggerSide/2) - floor(smallerSide/2);
-
+    int objX = floor((biggerSide - smallerSide)/2);
+    int objY = objX;
+/*
     int sqX = pow(objX-posX,2);
     int sqY = pow(objY-posY,2);
 
     double d = sqrt(sqX+sqY);
     return d;
+*/
+    return abs(objX-posX) + abs(objY-posY);
 }
 void Square::clear(){
     positions.clear();
