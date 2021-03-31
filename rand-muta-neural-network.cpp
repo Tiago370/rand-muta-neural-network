@@ -23,13 +23,13 @@ using namespace std;
 void run(int smaller, int bigger, int posX, int posY);
 int main() {
 	square_training();
-	//run(1,100, 99, 99);
+	//run(1,100, 50, 50);
 	//compNumber();
 	return 0;
 }
 void run(int smaller, int bigger, int posX, int posY){
 	Net net = Net(1,1,1,1);
-	net.openNet("champion_1332.txt");
+	net.openNet("rand-muta-neural-network/champion_1332.txt");
 	int nInputs = net.getNInputs();
 	int nOutputs = net.getNOutput();
 	Square square = Square(smaller, bigger);
